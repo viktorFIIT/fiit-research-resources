@@ -57,7 +57,8 @@ This pattern documents situation where framework and possibly its application in
 **From second experiment with trigrams**:
 
 1. Organization Follows Market (p=0.060326) -> Developing In Pairs (p=0.060123) -> Architecture Team (p=0.059011) from trigrams. <br>
-This pattern sequence is about having the core team whose members experiment with new technology and try to design initial architecture of the already existing system based on this new technology as part of the migration step.
+This pattern sequence is about having the core team whose members experiment with new technology and try to design initial architecture of the already existing system based on this new technology as part of the migration step.<br> Pattern story for this pattern sequence can be found [here](https://github.com/viktorFIIT/fiit-research-resources/blob/main/neural-network/pattern-stories/third-pattern-story-from-trigrams.png).
+
 
 ![sequence drawio (4) drawio](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/2f7feefc-929c-431e-bf85-662743903aea)
 
