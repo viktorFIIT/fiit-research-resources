@@ -34,6 +34,8 @@ Pattern story for this pattern sequence can be found [here](https://github.com/v
 3. Architecture Team (p=0.057077) -> Few Roles (p=0.055865) -> Generics and Specifics (p=0.055788) from trigrams. <br>
 Experienced senior developers choose the technology to work with, and then according to Architecture Team1 design the initial software product architecture. Some less experienced software developers are then according to Few Roles2 and Generics and Specifics3 chosen to incorporate and customize this framework in the specific software products. <br>
 Pattern story for this pattern sequence can be found [here](https://github.com/viktorFIIT/fiit-research-resources/blob/main/neural-network/pattern-stories/second-pattern-story-from-trigrams.png).
+
+
 ![sequence drawio (4)](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/c0103735-4ef1-4cd5-bd2d-31c2794821c2)
 
 
@@ -42,10 +44,12 @@ Pattern story for this pattern sequence can be found [here](https://github.com/v
 1. Architect Controls Product (p=0.228964) -> Few Roles (p=0.126118) -> Code Ownership (p=0.119162) from bigrams <br>
 This pattern sequence documents usual setting in software house companies, where skilled and experienced developer is assigned application owner role. He still can have consultants assigned or it's own developer to help, but everything flows through the owner hands. This pattern sequence is partially based on implicit relationships between its patterns because Architect Controls Product makes reference to Code Ownership (as architect can code too).<br> Pattern story for this pattern sequence can be found [here](https://github.com/viktorFIIT/fiit-research-resources/blob/main/neural-network/pattern-stories/third-pattern-story-from-bigrams.png).
 
+
 ![fifth-pattern-sequence drawio](https://user-images.githubusercontent.com/32246112/236620677-61e70dc4-7be2-48bd-a59d-d7d50dd05568.png)
 
 2. Generics and Specifics (p=0.562330) -> Distribute Work Evenly (p=0.356492) -> Architect Controls Product (p=0.238690). <br>
-This pattern documents situation where framework and possibly its application in another code base or product is developed and maintained by various roles. Build of the final product is supervised by architect who also directs the architectural style of this framework. This pattern sequence is based completely on implicit relationships between its patterns.
+This pattern documents situation where framework and possibly its application in another code base or product is developed and maintained by various roles. Build of the final product is supervised by architect who also directs the architectural style of this framework. This pattern sequence is based completely on implicit relationships between its patterns.<br> Pattern story for this pattern sequence can be found [here](https://github.com/viktorFIIT/fiit-research-resources/blob/main/neural-network/pattern-stories/fourth-pattern-story-from-bigrams.png).
+
 
 ![sixth-pattern-sequence drawio](https://user-images.githubusercontent.com/32246112/236622100-6eef5b7c-33d3-4d03-9b33-2f00e25358c4.png)
 
