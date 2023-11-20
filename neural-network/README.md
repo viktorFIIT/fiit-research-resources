@@ -45,11 +45,15 @@ This pattern documents situation where framework and possibly its application in
 
 ![sixth-pattern-sequence drawio](https://user-images.githubusercontent.com/32246112/236622100-6eef5b7c-33d3-4d03-9b33-2f00e25358c4.png)
 
+
 **From second experiment with trigrams**:
 
 1. Organization Follows Market (p=0.060326) -> Developing In Pairs (p=0.060123) -> Architecture Team (p=0.059011) from trigrams. <br>
 This pattern sequence is about having the core team whose members experiment with new technology and try to design initial architecture of the already existing system based on this new technology as part of the migration step.
 
+![sequence drawio (4) drawio](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/2f7feefc-929c-431e-bf85-662743903aea)
 
 2. Smoke Filled Room (p=0.063462) -> Code Ownership (p=0.057482) -> Lock Em Up Together (p=0.054356) from trigrams. <br>
 This pattern sequence can be used to devise solution which is going to impact multiple software projects or products at once. This solution is expected to be well designed by the tycoons in the development staff.
+
+![sequence drawio (4) drawio (1)](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/75b3a553-e372-4601-a7ac-cc0244d3accd)
