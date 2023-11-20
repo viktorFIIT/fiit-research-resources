@@ -23,12 +23,12 @@ This pattern sequence can be used to implement solution expected to be used acro
 **From first experiment with trigrams**:
 
 1. Apprenticeship (p=0.998081) -> Domain Expertise In Roles (p=0.063485) -> Standup Meeting (p=0.061498) from trigrams. <br>
-This pattern sequence is about novice developers working together with senior developers who are experts in their field, according to Apprenticeship1. The development team consists of the subteams responsible for particular products as per the Domain Expertise In Roles2. These subteams meet according to Standup Meeting3 to discuss what’s going on and work plans for the future.
+This pattern sequence is about novice developers working together with senior developers who are experts in their field, according to Apprenticeship1. The development team consists of the subteams responsible for particular products as per the Domain Expertise In Roles2. These subteams meet according to Standup Meeting3 to discuss what’s going on and work plans for the future. <br>
 Pattern story for this pattern sequence can be found [here](https://github.com/viktorFIIT/fiit-research-resources/blob/main/neural-network/pattern-stories/first-pattern-story-from-trigrams.png).
 ![sequence drawio (3)](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/357ac30f-c101-4d7e-abb2-17987a9d8818)
 
 2. Architecture Team (p=0.057077) -> Few Roles (p=0.055865) -> Generics and Specifics (p=0.055788) from trigrams. <br>
-Experienced senior developers choose the technology to work with, and then according to Architecture Team1 design the initial software product architecture. Some less experienced software developers are then according to Few Roles2 and Generics and Specifics3 chosen to incorporate and customize this framework in the specific software products. 
+Experienced senior developers choose the technology to work with, and then according to Architecture Team1 design the initial software product architecture. Some less experienced software developers are then according to Few Roles2 and Generics and Specifics3 chosen to incorporate and customize this framework in the specific software products. <br>
 Pattern story for this pattern sequence can be found [here](https://github.com/viktorFIIT/fiit-research-resources/blob/main/neural-network/pattern-stories/second-pattern-story-from-trigrams.png)
 ![sequence drawio (4)](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/c0103735-4ef1-4cd5-bd2d-31c2794821c2)
 
