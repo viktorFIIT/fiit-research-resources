@@ -4,15 +4,6 @@ This repository helps you to establish sequences of organizational patterns from
 
 Pattern stories to all established pattern sequences can be found at [pattern stories site](https://github.com/viktorFIIT/fiit-research-resources/tree/main/neural-network/pattern-stories)
 
-How to establish pattern sequences with artificial neural networks:
-
-1. prepare dataset
-2. train neural network on this dataset implementing softmax regression model
-3. identify first pattern in pattern sequence. This pattern is identified by the highest probability in all output vectors.
-4. second-highest probability identifies second pattern in this pattern sequence...
-
-Each run of this neural network provides you unique probabilities and leads to unique pattern sequences.
-
 Following pattern sequences were established:
 
 **From first experiment with bigrams**:
