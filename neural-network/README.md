@@ -2,6 +2,8 @@
 
 This repository helps you to establish sequences of organizational patterns from all 4 languages of organizational patterns documented by Coplien and Harrison in Organizational Patterns of Agile Software Development.
 
+8 expected pattern sequences were established. 8 pattern stories for them were created (for each).
+
 Pattern stories to all established pattern sequences can be found at [pattern stories site](https://github.com/viktorFIIT/fiit-research-resources/tree/main/neural-network/pattern-stories)
 
 Following meaningful expected pattern sequences were established:
