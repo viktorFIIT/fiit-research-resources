@@ -2,6 +2,8 @@
 
 This repository helps you to establish sequences of organizational patterns from all 4 languages of organizational patterns documented by Coplien and Harrison in Organizational Patterns of Agile Software Development.
 
+8 expected pattern sequences were established. 8 pattern stories for them were created (for each).
+
 Pattern stories to all established pattern sequences can be found at [pattern stories site](https://github.com/viktorFIIT/fiit-research-resources/tree/main/neural-network/pattern-stories)
 
 Following meaningful expected pattern sequences were established:
@@ -63,6 +65,6 @@ This pattern sequence is about having the core team whose members experiment wit
 ![sequence drawio (4) drawio](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/2f7feefc-929c-431e-bf85-662743903aea)
 
 2. Smoke Filled Room (p=0.063462) -> Code Ownership (p=0.057482) -> Lock Em Up Together (p=0.054356) from trigrams. <br>
-This pattern sequence can be used to devise solution which is going to impact multiple software projects or products at once. This solution is expected to be well designed by the tycoons in the development staff.
+This pattern sequence can be used to devise solution which is going to impact multiple software projects or products at once. This solution is expected to be well designed by the tycoons in the development staff.<br> Pattern story for this pattern sequence can be found [here](https://github.com/viktorFIIT/fiit-research-resources/blob/main/neural-network/pattern-stories/fourth-pattern-story-from-trigrams.png).
 
 ![sequence drawio (4) drawio (1)](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/75b3a553-e372-4601-a7ac-cc0244d3accd)
