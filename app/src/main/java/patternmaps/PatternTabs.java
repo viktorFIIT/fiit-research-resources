@@ -71,7 +71,13 @@ public class PatternTabs {
 
     private String nextApplicablePattern;
 
-    public TabPane findNextApplicablePatternAfter(String thisCentralPattern, boolean subsequentPatternMap) throws IOException {
+    private String currentCentralPattern;
+
+    private Map<String, String> symmetriesForUnknownPatterns = new HashMap<>();
+
+    public TabPane findNextApplicablePatternAfter(String thisCentralPattern, boolean subSequentTab) throws IOException {
+
+        this.currentCentralPattern = thisCentralPattern;
 
         Tab tab = new Tab();
         tab.setText(thisCentralPattern + " tab");
@@ -119,6 +125,12 @@ public class PatternTabs {
                             VBox newLeftGroup = new VBox();
                             newLeftGroup.getChildren().addAll(patternMapLabel, updatedPatternMap, nextApplicablePatternLabel, nextApplicablePatternTextField, twoWayRelationshipCheckBox, nextApplicablePatternSubmitButton);
                             tabContent.setLeft(newLeftGroup);
+
+                            VBox newCenterGroup = new VBox();
+                            newCenterGroup.getChildren().add(0, tableWithProbabilities);
+                            addComponentToContinueInEstablishing(newCenterGroup);
+                            tabContent.setCenter(newCenterGroup);
+
                             tab.setContent(tabContent);
 
                             substituteTabPane.getTabs().add(tab);
@@ -133,21 +145,19 @@ public class PatternTabs {
                             stage.show();
 
                         } else {
-                            allTabs.getTabs().remove(tab);
+                            PreviouslyCreatedTab previouslyCreatedTab = tabsWithContents.get(0);
 
                             ImageView updatedPatternMap = createPatternMap(tab, graphRepresentation, thisCentralPattern, nextApplicablePatternTextField.getText(), true);
 
                             VBox newLeftGroup = new VBox();
                             newLeftGroup.getChildren().addAll(patternMapLabel, updatedPatternMap, nextApplicablePatternLabel, nextApplicablePatternTextField, twoWayRelationshipCheckBox, nextApplicablePatternSubmitButton);
-                            tabContent.setLeft(newLeftGroup);
+                            previouslyCreatedTab.getPreviouslyCreatedTabContent().setLeft(newLeftGroup);
 
                             VBox newCenterGroup = new VBox();
                             newCenterGroup.getChildren().add(tableWithProbabilities);
-                            tabContent.setCenter(newCenterGroup);
+                            previouslyCreatedTab.getPreviouslyCreatedTabContent().setCenter(newCenterGroup);
 
-                            tab.setContent(tabContent);
-
-                            allTabs.getTabs().add(tab);
+                            Main.getStage().show();
                         }
                     } else {
 
@@ -168,6 +178,12 @@ public class PatternTabs {
                             VBox newLeftGroup = new VBox();
                             newLeftGroup.getChildren().addAll(patternMapLabel, updatedPatternMap, nextApplicablePatternLabel, nextApplicablePatternTextField, twoWayRelationshipCheckBox, nextApplicablePatternSubmitButton);
                             tabContent.setLeft(newLeftGroup);
+
+                            VBox newCenterGroup = new VBox();
+                            newCenterGroup.getChildren().add(0, tableWithProbabilities);
+                            addComponentToContinueInEstablishing(newCenterGroup);
+                            tabContent.setCenter(newCenterGroup);
+
                             tab.setContent(tabContent);
 
                             substituteTabPane.getTabs().add(tab);
@@ -198,8 +214,11 @@ public class PatternTabs {
                         }
                     }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    System.err.println(ex.getMessage());
+                    Alert lastEditablePatternMapCannotBeUpdated = new Alert(Alert.AlertType.ERROR);
+                    lastEditablePatternMapCannotBeUpdated.setContentText("Pattern map of applicable patterns cannot be updated");
+                    lastEditablePatternMapCannotBeUpdated.show();
                 }
             }
         });
@@ -218,7 +237,7 @@ public class PatternTabs {
 
         tab.setContent(tabContent);
 
-        if (subsequentPatternMap) {
+        if (subSequentTab) {
             TabPane substituteTabPane = new TabPane();
 
             for (int i=0; i < tabsWithContents.size(); i++) {
@@ -236,6 +255,8 @@ public class PatternTabs {
             edgeForUnknownPatternAlreadyProcessed.clear();
 
             substituteTabPane.getSelectionModel().select(tab);
+
+            tabsWithContents.add(new PreviouslyCreatedTab(thisCentralPattern, tableWithProbabilities, tab, tabContent));
 
             LastTabPane.setLastTabPane(substituteTabPane);
 
@@ -307,10 +328,15 @@ public class PatternTabs {
                             symmetryValuesForFindingStrongestOne.put(symmetryObject.getAdditionalPattern(), Double.valueOf(symmetry));
                         }
                     } else {
+                        String unknownRelationship = centralPatternInPatternMap + ":" + abbrevOfAdditionalPattern;
                         if (!edgeForUnknownPatternAlreadyProcessed.containsKey(abbrevOfAdditionalPattern)) {
+                            edge.setValue(unknownRelationship);
                             edgeForUnknownPatternAlreadyProcessed.put(abbrevOfAdditionalPattern, true);
-                            edge.setValue(centralPatternInPatternMap + ":" + abbrevOfAdditionalPattern);
                             forceUsersToInsertProbabilities(insideThisTab, centralPatternInPatternMap, abbrevOfAdditionalPattern, graphRepresentation);
+                        } else {
+                            if (symmetriesForUnknownPatterns.containsKey(unknownRelationship)) {
+                                edge.setValue(symmetriesForUnknownPatterns.get(unknownRelationship));
+                            }
                         }
                     }
                 } else {
@@ -332,7 +358,7 @@ public class PatternTabs {
         tableView.getItems().add(symmetryObject); // update table
         updatedCenter.getChildren().clear();
         updatedCenter.getChildren().add(0, tableView);
-        addComponentToContinueInEstablishing(updatedCenter, symmetryObject);
+        addComponentToContinueInEstablishing(updatedCenter);
         tabContent.setCenter(updatedCenter);
 
         Tab tab = new Tab();
@@ -341,16 +367,29 @@ public class PatternTabs {
         tab.setContent(tabContent);
 
         TabPane recreatedTabPane = new TabPane();
-        PreviouslyCreatedTab previouslyCreatedTab = tabsWithContents.get(tabsWithContents.size() - 1);
-        recreatedTabPane.getTabs().add(previouslyCreatedTab.getPreviouslyCreatedTab());
+
+        for (int i=0; i < tabsWithContents.size(); i++) {
+            PreviouslyCreatedTab previouslyCreatedTab = tabsWithContents.get(i);
+            if (!previouslyCreatedTab.getPreviouslyCreatedTab().getText().contains(this.currentCentralPattern)) {
+                try {
+                    recreatedTabPane.getTabs().add(previouslyCreatedTab.recreateTab());
+                } catch (FileNotFoundException ex) {
+                    System.err.println("Tab from history could not be recreated in attempt to update table");
+                }
+            }
+        }
+
         recreatedTabPane.getTabs().add(tab);
         recreatedTabPane.getSelectionModel().select(tab);
+
+        LastTabPane.setLastTabPane(recreatedTabPane);
+
         Stage primaryStage = Main.getStage();
         primaryStage.getScene().setRoot(recreatedTabPane);
         primaryStage.show();
     }
 
-    private VBox addComponentToContinueInEstablishing(VBox centralPartOfWindow, SymmetryOfRelationship symmetryObject) {
+    private VBox addComponentToContinueInEstablishing(VBox centralPartOfWindow) {
         HBox findNextApplicablePatternRow = new HBox();
         Button findNextApplicablePatternButton = new Button();
         findNextApplicablePatternButton.setText("Find next applicable pattern ");
@@ -365,9 +404,9 @@ public class PatternTabs {
                     tableWithProbabilities = new TableView();
                     findNextApplicablePatternAfter(nextApplicablePattern, true);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.err.println(ex.getMessage());
                     Alert cannotContinueInEstablishing = new Alert(Alert.AlertType.ERROR);
-                    cannotContinueInEstablishing.setContentText("Cannot continue in establishing expected pattern sequence");
+                    cannotContinueInEstablishing.setContentText("Cannot continue in establishing because pattern map construction thrown an error");
                     cannotContinueInEstablishing.show();
                 }
             }
@@ -384,7 +423,7 @@ public class PatternTabs {
             PreviouslyCreatedTab updatedObject = null;
             int indexOfUpdatedTab = 0;
             for (int i=0; i < tabsWithContents.size(); i++) {
-                if (tabsWithContents.get(i).getForPattern().equals(symmetryObject.getCentralPattern())) {
+                if (tabsWithContents.get(i).getForPattern().equals(this.currentCentralPattern)) {
                     tabsWithContents.get(i).setPatternExpectedToBeAppliedNext(minSymmetry.getKey());
                     updatedObject = tabsWithContents.get(i);
                     indexOfUpdatedTab = i;
@@ -488,6 +527,7 @@ public class PatternTabs {
                 if (!edgeSymmetries.contains(jGraphTGeneratedNameOfTheEdge)) { // because edges are traversed during each graph rendering
                     if (!symmetryObjectForUnknownPattern.getCentralPattern().equals(abbrevOfAdditionalPattern)) {
                         if (abbrevOfAdditionalPattern.equals(patternNotPresentInKickOffSequence)) {
+                            symmetriesForUnknownPatterns.put(symmetryObjectForUnknownPattern.getCentralPattern() + ":" + symmetryObjectForUnknownPattern.getAdditionalPattern(), symmetryObjectForUnknownPattern.getSymmetry());
                             edge.setValue(symmetryObjectForUnknownPattern.getSymmetry());
                             edgeSymmetries.add(jGraphTGeneratedNameOfTheEdge);
                         }
@@ -507,15 +547,34 @@ public class PatternTabs {
             Image patternMapImage = new Image(new FileInputStream("src/test/resources/"+symmetryObjectForUnknownPattern.getCentralPattern()+"-pattern-map.png"));
             ImageView imageView = new ImageView(patternMapImage);
 
+            TabPane substituteTabPane = new TabPane();
+
+            for (int i=0; i < tabsWithContents.size(); i++) {
+                PreviouslyCreatedTab previouslyCreatedTab = tabsWithContents.get(i);
+                Tab recreatedTab = previouslyCreatedTab.recreateTab();
+                if (!previouslyCreatedTab.getForPattern().equals(this.currentCentralPattern)) substituteTabPane.getTabs().add(i, recreatedTab);
+            }
+
             VBox newLeftGroup = new VBox();
             newLeftGroup.getChildren().addAll(patternMapLabel, imageView, nextApplicablePatternLabel, nextApplicablePatternTextField, twoWayRelationshipCheckBox, nextApplicablePatternSubmitButton);
             tabContent.setLeft(newLeftGroup);
             insideThisTab.setContent(tabContent);
-            allTabs.getTabs().add(insideThisTab);
+
+            substituteTabPane.getTabs().add(insideThisTab);
+
+            substituteTabPane.getSelectionModel().select(insideThisTab);
+
+            LastTabPane.setLastTabPane(substituteTabPane);
+
+            Scene scene = new Scene(substituteTabPane, 1200, 600);
+            Stage stage = Main.getStage();
+            stage.setScene(scene);
+            stage.show();
+
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println(ex.getMessage());
             Alert cannotRecreateMapError = new Alert(Alert.AlertType.ERROR);
-            cannotRecreateMapError.setContentText("Pattern map could not be recreated because of error");
+            cannotRecreateMapError.setContentText("Pattern map could not be updated with label for pattern not present in kick-off sequence");
             cannotRecreateMapError.show();
         }
     }

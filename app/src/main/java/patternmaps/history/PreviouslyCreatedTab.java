@@ -11,6 +11,13 @@ import javafx.scene.layout.VBox;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Class that represents previously created tab, that has to be visible
+ * such that users can see previous decisions. This tab is not editable.
+ * This tab displays last state of pattern map of applicable patterns and
+ * table with probabilities and symmetries. This tab can be accessed by
+ * clicking on its name.
+ * */
 public class PreviouslyCreatedTab {
 
     private String createdForThisPattern;

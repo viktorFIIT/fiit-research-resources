@@ -1,23 +1,18 @@
 package stochastictree;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import patternmaps.PatternTabs;
-import patternmaps.history.LastTabPane;
+import patternmaps.history.Rooter;
 
 public class CandidateExtractor {
 
@@ -146,23 +141,9 @@ public class CandidateExtractor {
         dialogStage.show();
     }
 
-    static TabPane lastTabPane;
-
     private void showPatternMap(String firstPatternInCandidateSequence) {
-        try {
-            PatternTabs patternTabs = new PatternTabs();
-            TabPane firstTabPane = patternTabs.findNextApplicablePatternAfter(firstPatternInCandidateSequence, false);
-            LastTabPane.setLastTabPane(firstTabPane);
-            Stage primaryStage = Main.getStage();
-            Scene firstTabScene = new Scene(LastTabPane.getLastVisibleTabPane(), 1200, 600);
-            primaryStage.setScene(firstTabScene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert expectedSequenceCannotBeEstablished = new Alert(Alert.AlertType.ERROR);
-            expectedSequenceCannotBeEstablished.setContentText("Expected pattern sequence cannot be established due to error");
-            expectedSequenceCannotBeEstablished.show();
-        }
+        Rooter rooter = new Rooter();
+        rooter.showFirstPatternTab(firstPatternInCandidateSequence);
     }
 
 }

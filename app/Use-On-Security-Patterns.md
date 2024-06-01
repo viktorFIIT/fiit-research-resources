@@ -40,3 +40,10 @@ If the next applicable pattern is not in the kick-off pattern sequence, applicat
 
 ![seventh-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/5ab3cef9-b1e0-46fa-af53-58d330a730c0)
 
+After providing all applicable patterns after the second expected pattern, use of the Role-Based Access Control security pattern was recommended by the app.
+
+![eight-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/01733193-8163-4e51-9fb9-079cc12c9468)
+
+Users of the app can also look back any time they want by clicking on the tab name and see what decision led to recommending use of another expected pattern. In the screen below, users were interested in what pattern was recommended to be used after Single Access Point. It was Security Session, for which the last editable tab was created.
+
+![second-tab](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/80bbbd2e-92a0-454c-a76f-0890a71d7e8c)
