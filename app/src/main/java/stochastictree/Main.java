@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 
 import components.NumberTextField;
 
-
+/**
+ * Start of the program. Execute main method in this class to interact with the program.
+ * */
 public class Main extends Application {
 
     private static StochasticTree stochasticTree = new StochasticTree();
@@ -37,8 +39,8 @@ public class Main extends Application {
         return Main.stage;
     }
 
-    static StochasticTree getStochasticTree() {
-        return Main.stochasticTree;
+    public static StochasticTree getStochasticTree() {
+        return stochasticTree;
     }
 
     /**
@@ -102,47 +104,38 @@ public class Main extends Application {
         insertButton.setOnAction(event -> {
             if (!patterNameTextField.getText().isEmpty() && !numberOfPatternsTextField.getText().isEmpty()) {
                 if (alreadyInsertedPatternNames.contains(patterNameTextField.getText())) {
-                    Alert patternAlreadyInsertedError = new Alert(Alert.AlertType.ERROR);
-                    patternAlreadyInsertedError.setContentText("Node for this pattern already exists in the tree");
-                    patternAlreadyInsertedError.show();
+                    Alert patternAlreadyInsertedWarning = new Alert(Alert.AlertType.WARNING);
+                    patternAlreadyInsertedWarning.setContentText("Node for this pattern already exists in the tree");
+                    patternAlreadyInsertedWarning.show();
                 } else {
-                    try {
-                        alreadyInsertedPatternNames.add(patterNameTextField.getText());
-                        numberOfPatterns = Integer.valueOf(numberOfPatternsTextField.getText());
 
-                        WebView stochasticTreeVisualization = stochasticTree.visualizeStochasticTreeUsingTextField(patterNameTextField.getText(), numberOfPatterns);
+                    alreadyInsertedPatternNames.add(patterNameTextField.getText());
+                    numberOfPatterns = Integer.valueOf(numberOfPatternsTextField.getText());
 
-                        if (stochasticTreeVisualization != null) {
-                            BorderPane borderPane = new BorderPane();
-                            borderPane.setCenter(stochasticTreeVisualization);
-                            borderPane.setBottom(createUserInputComponent(true, patterNameTextField.getText()));
+                    WebView stochasticTreeVisualization = stochasticTree.visualizeStochasticTreeUsingTextField(patterNameTextField.getText(), numberOfPatterns);
 
-                            Scene updatedScene = new Scene(borderPane, 1200, 600);
-                            Main.stage.setScene(updatedScene);
-                            Main.stage.show();
-                        } else {
-                            Alert stochasticTreeTooBigAlert = new Alert(Alert.AlertType.WARNING);
-                            stochasticTreeTooBigAlert.setContentText("Stochastic tree would be too big, click on button Find candidate.");
-                            stochasticTreeTooBigAlert.show();
-                        }
+                    if (stochasticTreeVisualization != null) {
+                        BorderPane borderPane = new BorderPane();
+                        borderPane.setCenter(stochasticTreeVisualization);
+                        borderPane.setBottom(createUserInputComponent(true, patterNameTextField.getText()));
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Alert missingPatternNameError = new Alert(Alert.AlertType.ERROR);
-                        missingPatternNameError.setContentText("Stochastic tree cannot be constructed");
-                        missingPatternNameError.show();
+                        Scene updatedScene = new Scene(borderPane, 1200, 600);
+                        Main.stage.setScene(updatedScene);
+                        Main.stage.show();
+                    } else {
+                        Alert stochasticTreeTooBigInfo = new Alert(Alert.AlertType.INFORMATION);
+                        stochasticTreeTooBigInfo.setContentText("Stochastic tree would be too big, click on button Find candidate instead");
+                        stochasticTreeTooBigInfo.show();
                     }
-
-
                 }
             } else if (patterNameTextField.getText().isEmpty()) {
-                Alert missingPatternNameError = new Alert(Alert.AlertType.ERROR);
-                missingPatternNameError.setContentText("Pattern abbreviation must be provided");
-                missingPatternNameError.show();
+                Alert missingPatternNameInfo = new Alert(Alert.AlertType.INFORMATION);
+                missingPatternNameInfo.setContentText("Pattern abbreviation must be provided");
+                missingPatternNameInfo.show();
             } else if (numberOfPatternsTextField.getText().isEmpty()) {
-                Alert missingNumberOfPatternsAlert = new Alert(Alert.AlertType.ERROR);
-                missingNumberOfPatternsAlert.setContentText("Number of patterns you work with must be provided");
-                missingNumberOfPatternsAlert.show();
+                Alert missingNumberOfPatternsInfo = new Alert(Alert.AlertType.INFORMATION);
+                missingNumberOfPatternsInfo.setContentText("Number of patterns you work with must be provided");
+                missingNumberOfPatternsInfo.show();
             }
         });
 
@@ -156,12 +149,12 @@ public class Main extends Application {
         });
         hBox.getChildren().add(findCandidateForExpectedPatternSequenceButton);
 
-        Button batchUploadButton = new Button();
-        batchUploadButton.setText("Insert Kick-off Sequence");
-        batchUploadButton.setOnAction(batchUploadAction -> {
+        Button uploadFullSequenceButton = new Button();
+        uploadFullSequenceButton.setText("Insert Kick-off Sequence");
+        uploadFullSequenceButton.setOnAction(batchUploadAction -> {
             readKickOffPatternSequenceFromTextArea();
         });
-        hBox.getChildren().add(batchUploadButton);
+        hBox.getChildren().add(uploadFullSequenceButton);
 
         Button clearButton = new Button();
         clearButton.setText("Clear");
@@ -182,23 +175,32 @@ public class Main extends Application {
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Insert Kick-off Pattern Sequence");
         dialogStage.initModality(Modality.WINDOW_MODAL);
+
         Text instructionText = new Text();
         instructionText.setText(" Insert abbreviations of pattern names deliminated with -> ");
         instructionText.setTextAlignment(TextAlignment.LEFT);
+
         Label numberOfPatternsUserWorksWithLabel = new Label();
         numberOfPatternsUserWorksWithLabel.setText(" Number of patterns you work with:  ");
+
         TextField numberOfPatternsUserWorksWithTextField = new TextField();
+
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
         textArea.setPrefColumnCount(20);
+
         Button establishExpectedPatternSequenceButton = new Button("Construct Tree");
         establishExpectedPatternSequenceButton.setOnAction(establishAction -> {
-            List<String> abbreviationsFromUser = Arrays.asList(textArea.getText().split("->"));
+
+            List<String> abbreviationsFromUser = Arrays.asList(textArea.getText().replace("\s", "").split("->"));
+
             List<String> patternAbbreviationsWeWorkWith = new ArrayList<>();
             for (String userAbbreviation : abbreviationsFromUser) {
                 patternAbbreviationsWeWorkWith.add(userAbbreviation.trim());
             }
+
             this.kickOffPatternSequencePatternsFromTextArea = patternAbbreviationsWeWorkWith;
+
             try {
                 int numberOfPatterns = Integer.valueOf(numberOfPatternsUserWorksWithTextField.getText());
                 Main.numberOfPatternsUserWorksWithInModalWindow = numberOfPatterns;
@@ -220,7 +222,6 @@ public class Main extends Application {
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
                 Alert missingPatternNameError = new Alert(Alert.AlertType.ERROR);
                 missingPatternNameError.setContentText("Stochastic tree cannot be constructed because of error");
                 missingPatternNameError.show();
@@ -228,10 +229,13 @@ public class Main extends Application {
         });
         HBox instruction = new HBox();
         instruction.getChildren().add(instructionText);
+
         HBox userInput = new HBox();
         userInput.getChildren().addAll(numberOfPatternsUserWorksWithLabel, numberOfPatternsUserWorksWithTextField);
+
         VBox textAreaVBox = new VBox(textArea, establishExpectedPatternSequenceButton);
         textAreaVBox.setAlignment(Pos.CENTER);
+
         VBox group = new VBox();
         group.getChildren().addAll(instruction, userInput, textAreaVBox);
         dialogStage.setScene(new Scene(group));

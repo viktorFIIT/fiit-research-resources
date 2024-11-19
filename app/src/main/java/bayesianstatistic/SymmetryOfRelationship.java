@@ -1,5 +1,10 @@
 package bayesianstatistic;
 
+/**
+ * POJO implementation of the class that wraps numerical representation of
+ * the strength of symmetry of relationship between two patterns along with
+ * values used for its computation.
+ */
 public class SymmetryOfRelationship {
 
     private String centralPattern;

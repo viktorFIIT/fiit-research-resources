@@ -9,6 +9,9 @@ import stochastictree.Main;
 
 import java.io.IOException;
 
+/**
+ * Class that provides functionality to move from the stochastic tree to pattern map tabs.
+ * */
 public class Rooter {
 
     private static TabPane lastVisibleTabPane;
@@ -21,14 +24,13 @@ public class Rooter {
     public void showFirstPatternTab(String startingPattern) {
         try {
             PatternTabs patternTabs = new PatternTabs();
-            TabPane firstTabPane = patternTabs.findNextApplicablePatternAfter(startingPattern, false);
+            TabPane firstTabPane = patternTabs.findNextApplicablePatternAfter(startingPattern, true);
             Rooter.setLastTabPane(firstTabPane);
             Stage primaryStage = Main.getStage();
             Scene firstTabScene = new Scene(Rooter.getLastVisibleTabPane(), 1200, 600);
             primaryStage.setScene(firstTabScene);
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
             Alert expectedSequenceCannotBeEstablished = new Alert(Alert.AlertType.ERROR);
             expectedSequenceCannotBeEstablished.setContentText("First pattern map cannot be displayed because of error");
             expectedSequenceCannotBeEstablished.show();

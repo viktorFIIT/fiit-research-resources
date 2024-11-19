@@ -25,7 +25,10 @@ import com.mxgraph.util.mxCellRenderer;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxStylesheet;
 
-class StochasticTree {
+/**
+ * Wrapper around JGraphT library used to visualize stochastic tree.
+ * */
+public class StochasticTree {
 
     private Map<Integer, List<Vertex>> levelsAndNodes = new HashMap<>();
 
@@ -36,7 +39,7 @@ class StochasticTree {
     private int levelsCounter = 0;
 
     /**
-     * Clears stochastic tree after click on button 'Clear'
+     * Clears stochastic tree after clicking on the button labeled 'Clear'
      * */
     void clearGraphStorage(List<String> alreadyInsertedPatternNames) {
         alreadyInsertedPatternNames.clear();
@@ -171,6 +174,7 @@ class StochasticTree {
      * */
     WebView visualizeStochasticTreeUsingListOfPatternAbbreviations(List<String> patternAbbreviations, int numberOfPatterns) throws IOException {
         if (!evaluateIfVisualizationShouldBeConstructed(patternAbbreviations, numberOfPatterns)) return null;
+
         // less than 8 patterns, we can visualize the tree
         DefaultDirectedGraph<Vertex, DefaultEdge> g = new DefaultDirectedGraph<>(DefaultEdge.class);
         int levelsCounter = 0;
@@ -183,64 +187,70 @@ class StochasticTree {
                 Vertex sourceNode = new Vertex(" root ");
                 sourceNode.setProbability(0);
 
-                Vertex insertedFirstNodeApplied = new Vertex(patternAbbreviations.get(i));
-                insertedFirstNodeApplied.setProbability(1.0/numberOfPatterns);
+                Vertex firstRightChild = new Vertex(patternAbbreviations.get(i));
+                firstRightChild.setProbability(1.0/numberOfPatterns);
 
-                Vertex insertedFirstNodeNotApplied = new Vertex("¬" + patternAbbreviations.get(i));
-                insertedFirstNodeNotApplied.setProbability(1.0-(1.0/numberOfPatterns));
+                Vertex firstLeftChild = new Vertex("¬" + patternAbbreviations.get(i));
+                firstLeftChild.setProbability(1.0-(1.0/numberOfPatterns));
 
                 List nodes = new ArrayList<Vertex>();
-                nodes.add(insertedFirstNodeApplied);
-                nodes.add(insertedFirstNodeNotApplied);
+                nodes.add(firstRightChild);
+                nodes.add(firstLeftChild);
+
                 levelsAndNodes.put(levelsCounter, nodes);
 
                 g.addVertex(sourceNode);
-                g.addVertex(insertedFirstNodeApplied);
-                g.addVertex(insertedFirstNodeNotApplied);
+                g.addVertex(firstRightChild);
+                g.addVertex(firstLeftChild);
 
-                g.addEdge(sourceNode, insertedFirstNodeApplied);
-                g.addEdge(sourceNode, insertedFirstNodeNotApplied);
+                g.addEdge(sourceNode, firstRightChild);
+                g.addEdge(sourceNode, firstLeftChild);
 
                 levelsCounter = levelsCounter + 1;
             } else {
 
                 List<Vertex> additionalNodes = new ArrayList<>();
+
                 List<Vertex> nodesOnPreviousLevel = levelsAndNodes.get(levelsCounter - 1);
 
                 for (Vertex node : nodesOnPreviousLevel) {
 
                     Vertex subtreeRoot = node;
                     g.addVertex(subtreeRoot);
-                    if (!allNodesInTree.contains(subtreeRoot)) allNodesInTree.add(subtreeRoot);
+
+                   if (!allNodesInTree.contains(subtreeRoot)) allNodesInTree.add(subtreeRoot);
+
+                    Vertex rightNode = new Vertex(patternAbbreviations.get(i));
+
+                    for (Vertex parent : node.getParents()) {
+                        rightNode.addParent(parent);
+                    }
+                    rightNode.addParent(node);
+
+                    rightNode.setProbability(1.0/calculateDenominator(rightNode, numberOfPatterns));
+                    g.addVertex(rightNode);
+
+                    if (!allNodesInTree.contains(rightNode)) allNodesInTree.add(rightNode);
+
+                    additionalNodes.add(rightNode);
+                    g.addEdge(subtreeRoot, rightNode);
 
 
-                    Vertex leftNode = new Vertex(patternAbbreviations.get(i));
-                    // store information about whole path
-                    // this should register all parents of parent of left node
+                    Vertex leftNode = new Vertex("¬" + patternAbbreviations.get(i));
+
                     for (Vertex parent : node.getParents()) {
                         leftNode.addParent(parent);
+
                     }
                     leftNode.addParent(node);
+
                     // use information about whole path to calculate denominator
-                    leftNode.setProbability(1.0/calculateDenominator(leftNode, numberOfPatterns));
+                    leftNode.setProbability(1.0-(1.0/calculateDenominator(leftNode, numberOfPatterns)));
                     g.addVertex(leftNode);
+
                     if (!allNodesInTree.contains(leftNode)) allNodesInTree.add(leftNode);
                     additionalNodes.add(leftNode);
                     g.addEdge(subtreeRoot, leftNode);
-
-                    Vertex rightNode = new Vertex("¬" + patternAbbreviations.get(i));
-                    // store information about whole path
-                    for (Vertex parent : node.getParents()) {
-                        rightNode.addParent(parent);
-
-                    }
-                    rightNode.addParent(node);
-                    // use information about whole path to calculate denominator
-                    rightNode.setProbability(1.0-(1.0/calculateDenominator(rightNode, numberOfPatterns)));
-                    g.addVertex(rightNode);
-                    if (!allNodesInTree.contains(rightNode)) allNodesInTree.add(rightNode);
-                    additionalNodes.add(rightNode);
-                    g.addEdge(subtreeRoot, rightNode);
 
                 }
 
@@ -290,10 +300,10 @@ class StochasticTree {
     }
 
     /**
-     * Decides if JGraphT should visualize the stochastic tree. Stochastic tree is left for visualization
+     * Decides if JGraphT should visualize the stochastic tree. Stochastic tree is going to be visualized
      * if it is going to be constructed for kick-off pattern sequence with less than 8 patterns.
      * */
-    boolean evaluateIfVisualizationShouldBeConstructed(List<String> patternAbbreviations, int numberOfPatterns) {
+    private boolean evaluateIfVisualizationShouldBeConstructed(List<String> patternAbbreviations, int numberOfPatterns) {
         if (patternAbbreviations.size() > 8) {
             buildStochasticTreeStructureButDoNotVisualizeIt(patternAbbreviations, numberOfPatterns);
             return false;
@@ -306,7 +316,7 @@ class StochasticTree {
      * Creates internal representation of the stochastic tree but without visualization, such that application can
      * still extract expected pattern sequence candidate from it.
      * */
-    void buildStochasticTreeStructureButDoNotVisualizeIt(List<String> patternAbbreviations, int numberOfPatterns) {
+    private void buildStochasticTreeStructureButDoNotVisualizeIt(List<String> patternAbbreviations, int numberOfPatterns) {
         int levelsCounter = 0;
         allNodesInTree.clear();
         levelsAndNodes.clear();
@@ -404,7 +414,7 @@ class StochasticTree {
         return browser;
     }
 
-    List<Vertex> getAllNodesInTree() {
+    public List<Vertex> getAllNodesInTree() {
         return allNodesInTree;
     }
 

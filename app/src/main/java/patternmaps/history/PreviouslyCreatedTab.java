@@ -14,10 +14,10 @@ import java.io.FileNotFoundException;
 /**
  * Class that represents previously created tab, that has to be visible
  * such that users can see previous decisions. This tab is not editable.
- * This tab displays last state of pattern map of applicable patterns and
+ * This tab displays last state of the pattern map of applicable patterns and
  * table with probabilities and symmetries. This tab can be accessed by
- * clicking on its name.
- * */
+ * clicking on its name in tab pane.
+ */
 public class PreviouslyCreatedTab {
 
     private String createdForThisPattern;
@@ -68,7 +68,7 @@ public class PreviouslyCreatedTab {
         Label recreatedPatternMapLabel = new Label();
         recreatedPatternMapLabel.setText("  Pattern Map of Applicable Patterns Before or After " + this.createdForThisPattern + " pattern ");
 
-        Image recreatedPatternMapImage = new Image(new FileInputStream("src/test/resources/"+this.createdForThisPattern+"-pattern-map.png"));
+        Image recreatedPatternMapImage = new Image(new FileInputStream("src/test/resources/" + this.createdForThisPattern + "-pattern-map.png"));
         ImageView recreatedImageView = new ImageView(recreatedPatternMapImage);
 
         VBox recreatedLeftGroup = new VBox();
@@ -82,10 +82,5 @@ public class PreviouslyCreatedTab {
         patternAppliedNextInThisTab.setText("  Pattern expected to be applied next after " + this.createdForThisPattern + " was " + this.patternExpectedToBeAppliedNext);
         recreatedCenterGroup.getChildren().addAll(this.filledTableWithProbabilities, patternAppliedNextInThisTab);
         return recreatedCenterGroup;
-    }
-
-
-    public TableView getFilledTableWithProbabilities() {
-        return filledTableWithProbabilities;
     }
 }

@@ -2,6 +2,10 @@ package components;
 
 import javafx.scene.control.TextField;
 
+/**
+ * Text field that allows only integers and any value that
+ * is not integer is automatically stripped from the input value.
+ */
 public class NumberTextField extends TextField {
 
     @Override

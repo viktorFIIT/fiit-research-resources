@@ -4,7 +4,10 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-class Vertex {
+/**
+ * Represents node in the stochastic tree.
+ * */
+public class Vertex {
 
     private DecimalFormat df = new DecimalFormat("0.00000");
 
@@ -22,7 +25,7 @@ class Vertex {
         this.parents.add(parent);
     }
 
-    List<Vertex> getParents() {
+    public List<Vertex> getParents() {
         return this.parents;
     }
 
@@ -30,11 +33,11 @@ class Vertex {
         this.probability = probability;
     }
 
-    double getProbability() {
+    public double getProbability() {
         return this.probability;
     }
 
-    String getVertexName() {
+    public String getVertexName() {
         return this.vertexName;
     }
 

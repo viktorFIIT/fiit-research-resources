@@ -1,6 +1,6 @@
-# Use on Security Patterns 1
+# Experiment with Security Patterns (EuroPLoP 2024)
 
-Let’s assume sequence of security patterns from the catalog of security patterns. Let’s denote names of the patterns in this sequence with first letters of the words in their names:
+Let’s assume the following sequence of security patterns from the catalog of security patterns. Let’s denote names of these patterns in this sequence with first letters of words in their names:
 
 - ACR – stands for Access Control Requirements.
 - SAP – stands for Single Access Point.
@@ -8,42 +8,30 @@ Let’s assume sequence of security patterns from the catalog of security patter
 - RBAC – stands for Role-Based Access Control.
 - AUTH – stands for Authorization.
 - ACL – stands for Access Control List.
-- PBAC – Policy-Based Access Control.
 
-**Kick-off sequence 1**:  ACR -> SAP -> SS -> RBAC -> AUTH -> ACL -> PBAC
+**Kick-off sequence**:  ACR -> SAP -> SS -> RBAC -> AUTH -> ACL
 
-User clicks on the “Insert Kick-off Sequence” button and inserts number of the patterns in catalog of security patterns and kick-off pattern sequence where patterns have abbreviated names. User constructs the stochastic tree for this kick-off pattern sequence by clicking on button “Construct Tree”.
+User clicks on the “Insert Kick-off Sequence” button and inserts number of the patterns in the catalog of security patterns she works with and the kick-off pattern sequence. User constructs the stochastic tree for this kick-off pattern sequence by clicking on the button “Construct Tree”.
 
-![first-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/e7bde952-a6fa-41aa-9162-9253b44f9135)
+![kick-off](https://github.com/user-attachments/assets/cdfce3e3-222b-457b-8cc3-7285528a742a)
 
-Once the stochastic tree is constructed user can search for the expected pattern sequence candidate on his own or he can speed up this process by clicking on button “Find candidate”.
+Once the stochastic tree is constructed, user can search for the expected pattern sequence candidate, or she can speed up this process by clicking on the button “Find candidate” instead. There can be multiple nodes in the stochastic tree with the highest probability:
 
-![second-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/3af93460-9119-4183-8ae0-dd1fd153296d)
+![select-candidate](https://github.com/user-attachments/assets/0dd219fa-5d12-4f89-83e8-884464c01fba)
 
-After that, the expected pattern sequence candidate is displayed to the user along with probability of applying it. Users can start establishing expected pattern sequence from this sequence by clicking on button “Establish”.
+User constructs pattern map of applicable patterns for the first pattern in the expected pattern sequence candidate. User is provided with pattern expected to be applied next after the first pattern in candidate sequence after clicking on “Find next applicable pattern” button. For patterns that are not present in the kick-off pattern sequence and that were identified in pattern map as applicable, probability of applying them before and after the first pattern in candidate sequence must be provided in modal window, such that symmetry of relationship can be computed.
 
-![third-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/b4701dff-0655-4066-86e3-078e9af66671)
+![insert-prob](https://github.com/user-attachments/assets/debc93b3-2b89-486e-a0a2-182b58eff159)
 
-User constructs pattern map of applicable patterns for first pattern in the expected pattern sequence candidate in the first tab. User is provided with pattern expected to be applied next after the first pattern in candidate sequence after clicking on “Find next applicable pattern” button. For patterns that are not present in the kick-off pattern sequence and there were identified in pattern map as applicable, probability of applying them before and after the first pattern in candidate sequence must be provided in modal window, such that symmetry of relationship can be computed.
+After clicking on the button labeled “Find next applicable pattern”, Single Access Point security pattern was identified as the one that is expected to be applied after the Access Control Requirements (or ACR). User can continue to establish expected pattern sequence by clicking on the button “Continue”.
 
-![fourth-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/fd3a7768-64ca-4c54-a797-24bb6b39221a)
+![sap-after-acr](https://github.com/user-attachments/assets/ac83d63b-cf7e-4ae4-8b29-249fdfc7d1cd)
 
-After clicking on button labeled “Find next applicable pattern”, SAP was shown standing as abbreviation for Single Access Point security pattern that is expected to be applied after the ACR or Access Control Requirements. User can now continue to establish expected pattern sequence by clicking on button “Continue”.
+After clicking on the button labeled “Find next applicable pattern” another expected pattern can be provided. This time it was the security pattern abbreviated as SS that stands for the Security Session.
 
-![fifth-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/b7e05347-7404-41c7-9476-f4a957c9027f)
-
-After clicking on button labeled “Find next applicable pattern” another expected pattern can be provided. This time it was security pattern abbreviated as SS that stands for Security Session pattern.
-
-![sixth-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/0c2a78c6-acbf-46d9-af97-889ac68fc94c)
-
-If the next applicable pattern is not in the kick-off pattern sequence, application asks for conditional probabilities:
-
-![seventh-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/5ab3cef9-b1e0-46fa-af53-58d330a730c0)
+![previous-sap](https://github.com/user-attachments/assets/db9bb3ed-dca8-4009-983e-4db6c1c10115)
+![next-is-ss](https://github.com/user-attachments/assets/27bfc4e9-6406-49f2-b531-bcfa8e8e29e9)
 
 After providing all applicable patterns after the second expected pattern, use of the Role-Based Access Control security pattern was recommended by the app.
 
-![eight-screen](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/01733193-8163-4e51-9fb9-079cc12c9468)
-
-Users of the app can also look back any time they want by clicking on the tab name and see what decision led to recommending use of another expected pattern. In the screen below, users were interested in what pattern was recommended to be used after Single Access Point. It was Security Session, for which the last editable tab was created.
-
-![second-tab](https://github.com/viktorFIIT/fiit-research-resources/assets/32246112/80bbbd2e-92a0-454c-a76f-0890a71d7e8c)
+![rbac-after-ss](https://github.com/user-attachments/assets/c26b6e1c-97b6-459b-9a55-702bb1878677)
