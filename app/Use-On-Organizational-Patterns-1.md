@@ -70,3 +70,11 @@ Pattern expected to be applied after the central pattern in the pattern map is t
 Name of this next expected pattern is provided to the user after clicking on the button “Find next applicable pattern”.
 
 ![sst-after-sw](https://github.com/user-attachments/assets/db0d959d-2ac3-429f-a66f-afcbf49a859a)
+
+After clicking on button “Continue”, user is redirected to another tab where she continues doing the same. 
+User is asked to provide other applicable patterns after the pattern that was previously identified as pattern expected to be applied next. 
+Strengths of symmetries of relationships are calculated again and provided on the table on the right-hand side. 
+This time, the next applicable pattern was DG = Diverse Groups. 
+This makes an expected pattern sequence SW -> SST -> DG standing for Skunk Works -> Self-Selecting Team -> Diverse Groups.
+
+![dg-after-sst](https://github.com/user-attachments/assets/407f3cc3-e473-46d4-af10-29c6b206b6b3)
