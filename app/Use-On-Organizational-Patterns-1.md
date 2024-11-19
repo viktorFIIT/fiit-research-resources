@@ -46,3 +46,27 @@ If the visualization of the stochastic tree would be too big to be visualized, t
 The structure of the stochastic tree is constructed but its visualization is stopped.
 
 ![too-many-nodes](https://github.com/user-attachments/assets/037045d1-b251-4572-b095-7e44f6da6802)
+
+As can be seen in the bottom picture, the application displays expected pattern sequence candidate along with the probability of applying it by the assumed domain expert.
+
+![list-of-org-sequences](https://github.com/user-attachments/assets/b982a7d2-dd10-496f-b300-c34702be9887)
+
+After clicking on the button “Establish Pattern Sequence”, user is redirected to the new tab where she can add additional applicable patterns after the first pattern in the candidate sequence into the pattern map of applicable patterns. 
+Abbreviations for these patterns must be inserted into the text field labeled “Next applicable pattern abbreviation”. 
+If some linked pattern links to the first pattern in candidate sequence in its text description, checkbox “Two-way relationship” must be checked.
+If central pattern in the pattern map does not link to some pattern but this pattern links to this central pattern, checkbox "Link to central pattern" must be checked.
+
+Each relationship between the central pattern in the pattern map and the additional applicable pattern is added into this map after clicking on the button "Insert node".
+
+After each addition of the relationship into the pattern map, a new row is added into the table with the conditional probabilities and the symmetry of relationships. 
+This table is displayed on the right side of the tab. This table consists of the four columns:
+
+- A column “Relationship” that indicates the first pattern in the expected pattern sequence candidate links to the additional pattern.
+- A column “Probability” that displays conditional probability of applying additional applicable pattern after the central pattern in the pattern map. This probability is extracted from the stochastic tree.
+- A column “Opposite Relationship” that provides inverse probability to the conditional probability and this opposite probability is calculated with the Bayes rule. It is a conditional probability of applying an additional applicable pattern before application of the central pattern in the pattern map.
+- A column “Symmetry of Relationship” provides symmetry of the relationship between the central pattern in the pattern map and each additional applicable pattern. This value is calculated as the absolute value of the difference between values displayed in columns “Probability” and “Opposite probability”.
+
+Pattern expected to be applied after the central pattern in the pattern map is the one that has the strongest symmetry (the lowest number in the column “Symmetry of Relationship”) of the relationship with the central pattern in this map. 
+Name of this next expected pattern is provided to the user after clicking on the button “Find next applicable pattern”.
+
+![sst-after-sw](https://github.com/user-attachments/assets/db0d959d-2ac3-429f-a66f-afcbf49a859a)
