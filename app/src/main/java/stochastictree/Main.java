@@ -17,6 +17,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import components.NumberTextField;
+import bayesiannetwork.BayesianNetworkCreator;
+
 
 /**
  * Start of the program. Execute main method in this class to interact with the program.
@@ -167,6 +169,14 @@ public class Main extends Application {
             Main.stage.show();
         });
         hBox.getChildren().add(clearButton);
+
+        Button simplifyBayesNetworkButton = new Button();
+        simplifyBayesNetworkButton.setText("Use Bayes");
+        simplifyBayesNetworkButton.setOnAction(createNetworkAction -> {
+            BayesianNetworkCreator.initializeBayesianNetworkTab();
+        });
+
+        hBox.getChildren().add(simplifyBayesNetworkButton);
         hBox.getChildren().add(lastNodeAdded);
         return hBox;
     }
