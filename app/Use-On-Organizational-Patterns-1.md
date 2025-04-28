@@ -1,4 +1,4 @@
-# Experiment with Organizational Patterns (Springer Nature)
+# Experiment with Organizational Patterns
 
 Let’s assume the following sequence of organizational patterns from the Piecemeal Growth pattern language. 
 Let’s denote names of these patterns in this sequence with first letters of words in their names:
